@@ -14,8 +14,17 @@ class OlxPage:
         # controll of interface of user
         self.option.headless = False
 
+        # Calling up methods
+        self.get_window()
+        self.get_dir()
 
+    def get_window(self):
+        self.root.title('Porsche Cars')
+        self.root.wm_attributes('-zoomed', True)
 
+    def get_dir(self):
+        save_dir = os.path.dirname(__file__)
+        os.chdir(save_dir)
 
 
 if __name__ == '__main__':
