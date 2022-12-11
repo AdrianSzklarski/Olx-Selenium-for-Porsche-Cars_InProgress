@@ -1,12 +1,10 @@
 <h1 align="center">Porsche Aplication</h1>
 
-<img src="images/Page1.png" alt="MainPage">
+<img src="/home/adrian/Pulpit/selenium_olx/olx.png" alt="MainPage">
 <br>
 
-<p style="text-align: center">An application I wrote fills in a form on olx.co.uk, motoring, Porsche and takes a print screen of the pages available with the cars and saves to a catalogue.  </p>
+<p style="text-align: center">An application I wrote fills in a form on olx.pl, motoring, Porsche and takes a print screen of the pages available with the cars and saves to a catalogue. </p>
 
-<br>
-<p>I am currently building the framework of the application in Tkinter.</p>
 
 # License
 
