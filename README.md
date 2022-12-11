@@ -1,6 +1,6 @@
 <h1 align="center">Porsche Aplication</h1>
 
-<img src="/home/adrian/Pulpit/selenium_olx/olx.png" alt="MainPage">
+<img src="images/olx.png" alt="OlxPage">
 <br>
 
 <p style="text-align: center">An application I wrote fills in a form on olx.pl, motoring, Porsche and takes a print screen of the pages available with the cars and saves to a catalogue. </p>
