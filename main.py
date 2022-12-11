@@ -34,14 +34,12 @@ class OlxPage:
         driver.maximize_window()
         driver.find_element(By.ID, 'onetrust-accept-btn-handler').click()
         driver.find_element(By.CLASS_NAME, 'css-mf5jvh').click()
-        time.sleep(2)
-        print(driver.find_element(By.CLASS_NAME, 'css-1ee1qo5').click())
-        time.sleep(2)
+        driver.find_element(By.XPATH,
+                            '//*[@id="root"]/div[1]/div[2]/form/div[3]/div[1]/div/div[3]/div/div/div[2]/div/div[7]/label/input').click()
 
 
 if __name__ == '__main__':
     root = tk.Tk()
     app = OlxPage(root)
     root.mainloop()
-
 
