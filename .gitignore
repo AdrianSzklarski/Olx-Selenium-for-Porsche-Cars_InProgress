@@ -160,6 +160,7 @@ cython_debug/
 .idea/
 .my_old_files/
 # Myfiles
+.my_old_files/
 README (kopia).md
 README good.md
 req.txt
