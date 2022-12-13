@@ -4,32 +4,27 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import tkinter as tk
-import os
+from os.path import join
 
 
-class OlxPage(object):
+class OlxPage:
     def __init__(self, root):
         self.root = root
         self.option = Options()
         self.total = None
+        # self.printDiv = ''
 
         # controll of interface of user
         self.option.headless = False
 
         # Calling up methods
         self.get_window()
-        self.get_dir()
         self.get_selection_model()
 
     def get_window(self):
         ''' Main window settings '''
         self.root.title('Porsche Cars, Program Created by Adrian Szklarski, 12.2022')
         self.root.wm_attributes('-zoomed', True)
-
-    def get_dir(self):
-        ''' Setting the root directory '''
-        save_dir = os.path.dirname(__file__)
-        os.chdir(save_dir)
 
     def get_selection_model(self):
         ''' Addition of car model selection buttons for analysis '''
@@ -109,7 +104,23 @@ class OlxPage(object):
             answer = f'{self.total} Porsche {self.name} models found'
             tk.Label(self.root, text=answer).place(x=60, y=460)
 
-            return int(self.total)
+
+        counter = 1
+        while True:
+            try:
+                div = driver.find_element(By.XPATH, f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]').text
+                resultPath = join(r'/home/adrian/Pulpit/selenium_olx/work_dir', f'Porsche{counter}.png')
+                with open(resultPath, 'wb') as file:
+                    if div and counter != 9:
+                        print(counter)
+                        link = f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]/a/div/div/div[1]/div[1]/div'
+                        file.write(driver.find_element(By.XPATH, link).screenshot_as_png)
+                    else:
+                        pass
+            except:
+                break
+            counter += 1
+
 
 class Gallery(OlxPage):
     def __init__(self):
@@ -149,8 +160,6 @@ class Gallery(OlxPage):
 
     def get_gallery(self):
         pass
-
-
 
 if __name__ == '__main__':
     root = tk.Tk()
