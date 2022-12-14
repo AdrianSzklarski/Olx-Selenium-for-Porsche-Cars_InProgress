@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import tkinter as tk
+import time
 from os.path import join
 
 
@@ -12,16 +13,15 @@ class OlxPage:
         self.root = root
         self.option = Options()
         self.total = None
-        # self.printDiv = ''
 
         # controll of interface of user
         self.option.headless = False
 
         # Calling up methods
-        self.get_window()
+        self.get_set_window()
         self.get_selection_model()
 
-    def get_window(self):
+    def get_set_window(self):
         ''' Main window settings '''
         self.root.title('Porsche Cars, Program Created by Adrian Szklarski, 12.2022')
         self.root.wm_attributes('-zoomed', True)
@@ -85,9 +85,13 @@ class OlxPage:
             else:
                 pass
 
+        #  Link-up for selected car model
         driver.get(f'https://www.olx.pl/d/motoryzacja/samochody/porsche/{self.link}')
+        #  Information on the number of cars found
         elements = driver.find_elements(By.XPATH,
                                         '//*[@id="root"]/div[1]/div[2]/form/div[4]/div[2]/h3/div')
+
+        #  Unpacking the text and downloading the number
         for element in elements:
             number = element.text
             oneNumber = []
@@ -104,19 +108,20 @@ class OlxPage:
             answer = f'{self.total} Porsche {self.name} models found'
             tk.Label(self.root, text=answer).place(x=60, y=460)
 
-
+        #  Downloading thumbnail images of cars
         counter = 1
         while True:
             try:
                 div = driver.find_element(By.XPATH, f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]').text
                 resultPath = join(r'/home/adrian/Pulpit/selenium_olx/work_dir', f'Porsche{counter}.png')
-                with open(resultPath, 'wb') as file:
-                    if div and counter != 9:
-                        print(counter)
-                        link = f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]/a/div/div/div[1]/div[1]/div'
+
+                if div and counter != 9:
+                    link = f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]/a/div/div/div[1]/div[1]/div'
+                    with open(resultPath, 'ab') as file:
+                        time.sleep(1)
                         file.write(driver.find_element(By.XPATH, link).screenshot_as_png)
-                    else:
-                        pass
+                else:
+                    pass
             except:
                 break
             counter += 1
