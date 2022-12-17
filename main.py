@@ -7,6 +7,8 @@ import tkinter as tk
 import time
 from os.path import join
 
+from module.clearDir import get_clear_dir
+
 
 class OlxPage:
     def __init__(self, root):
@@ -20,6 +22,7 @@ class OlxPage:
         # Calling up methods
         self.get_set_window()
         self.get_selection_model()
+        get_clear_dir()
 
     def get_set_window(self):
         ''' Main window settings '''
