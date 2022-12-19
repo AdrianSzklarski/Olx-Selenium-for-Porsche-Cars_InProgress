@@ -1,4 +1,6 @@
 # imports for scrapping to olx page
+import sys
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -8,10 +10,11 @@ import time
 from os.path import join
 
 from module.clearDir import get_clear_dir
+from module.myGallery import MyGalleryOfCars
 
 
 class OlxPage:
-    def __init__(self, root):
+    def __init__(self, root, *args, **kwargs):
         self.root = root
         self.option = Options()
         self.total = None
@@ -22,6 +25,8 @@ class OlxPage:
         # Calling up methods
         self.get_set_window()
         self.get_selection_model()
+
+        #Iimport of external files
         get_clear_dir()
 
     def get_set_window(self):
@@ -131,14 +136,14 @@ class OlxPage:
 
 
 class Gallery(OlxPage):
-    def __init__(self):
-        OlxPage.__init__(self, root)
+    '''Gallery window'''
+    def __init__(self, *args, **kwargs):
+        OlxPage.__init__(self, root, *args, **kwargs)
         self.gallery = root
 
         menu = tk.Menu(self.gallery)
         file_menu = tk.Menu(menu)
-        self.root.config(menu=file_menu)
-
+        self.gallery.config(menu=file_menu)
         empty = tk.Menu(file_menu, tearoff=0)  # empty dock
         file_menu.add_cascade(label='                       '
                                     '                       '
@@ -150,26 +155,29 @@ class Gallery(OlxPage):
 
         file_menu.add_cascade(label="File", menu=filemenu)
 
-        # file
+        # File
         filemenu.add_command(label="New")
         filemenu.add_command(label="Save")
         filemenu.add_command(label="Save as...")
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=quit)
 
-        # air
-        file_menu.add_cascade(label="Next >>", command=self.get_gallery)
-        file_menu.add_cascade(label="Prev <<", command=self.get_gallery)
+        # Next & prev
+        file_menu.add_command(label="Next >>", command=self.get_gallery)
+        file_menu.add_command(label="Prev <<", command=self.get_gallery)
 
         # Help
         file_menu.add_cascade(label="Help", menu=helpmenu)
         helpmenu.add_command(label="About program")
         helpmenu.add_command(label="About...")
 
+
     def get_gallery(self):
-        pass
+        MyGalleryOfCars(root).get_run()
+
 
 if __name__ == '__main__':
     root = tk.Tk()
     app = Gallery()
     root.mainloop()
+
