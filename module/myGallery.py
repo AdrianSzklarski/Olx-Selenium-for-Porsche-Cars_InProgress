@@ -5,8 +5,17 @@ class MyGalleryOfCars:
         self.root.config(width=300, height=200)
         self.root.title("Secondary Window")
         self.root.focus()
-    def get_run(self):
+
         self.root.mainloop()
+
+    def get_next(self):
+        print('Next')
+
+    def get_prev(self):
+        print('Prev')
+
+
+
 
 # root = tk.Tk()
 # MyGalleryOfCars(root).get_run()

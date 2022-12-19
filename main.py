@@ -163,8 +163,8 @@ class Gallery(OlxPage):
         filemenu.add_command(label="Exit", command=quit)
 
         # Next & prev
-        file_menu.add_command(label="Next >>", command=self.get_gallery)
-        file_menu.add_command(label="Prev <<", command=self.get_gallery)
+        file_menu.add_command(label="Next >>", command=self.get_next_photo)
+        file_menu.add_command(label="Prev <<", command=self.get_prev_photo)
 
         # Help
         file_menu.add_cascade(label="Help", menu=helpmenu)
@@ -172,8 +172,11 @@ class Gallery(OlxPage):
         helpmenu.add_command(label="About...")
 
 
-    def get_gallery(self):
-        MyGalleryOfCars(root).get_run()
+    def get_next_photo(self):
+        MyGalleryOfCars(root).get_next()
+
+    def get_prev_photo(self):
+        MyGalleryOfCars(root).get_prev()
 
 
 if __name__ == '__main__':
