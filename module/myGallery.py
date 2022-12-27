@@ -26,33 +26,3 @@ class MyGalleryOfCars:
         return len(self.tableCars)
 
 
-
-    # def get_next(self):
-    #     # interior loop
-    #     from main import Gallery
-    #     from main import OlxPage
-    #     counter = OlxPage(self.root)
-    #     print(counter)
-    #     # -------------
-
-        # for cars in range(0, len(self.tableCars)):
-        # link = f'/home/adrian/Pulpit/selenium_olx/work_dir_scale/Porsche_{1}.png'
-        # load = Image.open(link)
-        # render = ImageTk.PhotoImage(load)
-        # img = tk.Label(self.root, image=render)
-        # img.image = render
-        # img.place(x=300, y=50)
-
-    def get_prev(self):
-        pass
-        # self.counter -= 1
-        # print(self.counter)
-        # for cars in range(0, len(self.tableCars)):
-        #     link = f'/home/adrian/Pulpit/selenium_olx/work_dir_scale/Porsche_{cars}.png'
-        #     load = Image.open(link)
-        #     render = ImageTk.PhotoImage(load)
-        #     img = tk.Label(self.root, image=render)
-        #     img.image = render
-        #     img.place(x=300, y=50)
-
-
