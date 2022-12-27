@@ -3,10 +3,16 @@ import os, glob
 
 
 def get_clear_dir():
-    dir = '/home/adrian/Pulpit/selenium_olx/work_dir'
-    filelist = glob.glob(os.path.join(dir, "*"))
-    for files in filelist:
+    dir_main = '/home/adrian/Pulpit/selenium_olx/work_dir'
+    dir_copy = '/home/adrian/Pulpit/selenium_olx/work_dir_scale'
+
+    filelistMain = glob.glob(os.path.join(dir_main, "*"))
+    filelistCopy = glob.glob(os.path.join(dir_copy, "*"))
+
+    for files in filelistMain:
         os.remove(files)
 
+    for files in filelistCopy:
+        os.remove(files)
 
 get_clear_dir()

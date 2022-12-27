@@ -1,6 +1,4 @@
 # imports for scrapping to olx page
-import sys
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -8,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 import tkinter as tk
 import time
 from os.path import join
+from PIL import Image, ImageTk
 
 from module.clearDir import get_clear_dir
 from module.myGallery import MyGalleryOfCars
@@ -18,6 +17,7 @@ class OlxPage:
         self.root = root
         self.option = Options()
         self.total = None
+
 
         # controll of interface of user
         self.option.headless = False
@@ -126,7 +126,7 @@ class OlxPage:
                 if div and counter != 9:
                     link = f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]/a/div/div/div[1]/div[1]/div'
                     with open(resultPath, 'ab') as file:
-                        time.sleep(1)
+                        time.sleep(0.5)
                         file.write(driver.find_element(By.XPATH, link).screenshot_as_png)
                 else:
                     pass
@@ -134,12 +134,14 @@ class OlxPage:
                 break
             counter += 1
 
-
 class Gallery(OlxPage):
     '''Gallery window'''
+
     def __init__(self, *args, **kwargs):
         OlxPage.__init__(self, root, *args, **kwargs)
         self.gallery = root
+        self.counterUp = 0
+        self.counterDown = 0
 
         menu = tk.Menu(self.gallery)
         file_menu = tk.Menu(menu)
@@ -171,13 +173,36 @@ class Gallery(OlxPage):
         helpmenu.add_command(label="About program")
         helpmenu.add_command(label="About...")
 
-
     def get_next_photo(self):
-        MyGalleryOfCars(root).get_next()
+        self.lenght = MyGalleryOfCars(self.root).get_read_photo()
+        self.counterUp += 1
+        if self.counterUp <= self.lenght:
+            link = f'/home/adrian/Pulpit/selenium_olx/work_dir_scale/Porsche_{self.counterUp}.png'
+            load = Image.open(link)
+            render = ImageTk.PhotoImage(load)
+            img = tk.Label(self.root, image=render)
+            img.image = render
+            img.place(x=300, y=80)
+        elif self.get_prev_photo():
+            self.counterDown = self.counterUp
+        else:
+            self.counter = 0
 
     def get_prev_photo(self):
-        MyGalleryOfCars(root).get_prev()
-
+        self.lenght = MyGalleryOfCars(self.root).get_read_photo()
+        self.counterDown -= 1
+        calc = self.lenght + self.counterDown + 1
+        if calc >= 1:
+            link = f'/home/adrian/Pulpit/selenium_olx/work_dir_scale/Porsche_{calc}.png'
+            load = Image.open(link)
+            render = ImageTk.PhotoImage(load)
+            img = tk.Label(self.root, image=render)
+            img.image = render
+            img.place(x=300, y=80)
+        elif self.get_next_photo():
+            self.counterUp = self.counterDown
+        else:
+            self.counter = 0
 
 if __name__ == '__main__':
     root = tk.Tk()
