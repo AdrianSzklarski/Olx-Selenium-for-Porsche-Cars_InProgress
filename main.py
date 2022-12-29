@@ -1,4 +1,3 @@
-# imports for scrapping to olx page
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
@@ -25,6 +24,7 @@ class OlxPage:
         # Calling up methods
         self.get_set_window()
         self.get_selection_model()
+        self.get_start_photo()
 
         #Iimport of external files
         get_clear_dir()
@@ -133,6 +133,17 @@ class OlxPage:
             except:
                 break
             counter += 1
+
+    def get_start_photo(self):
+        link = f'/home/adrian/Pulpit/selenium_olx/Start_Page.png'
+        image = Image.open(link).resize((600, 400), Image.ANTIALIAS)
+        image.save(fp=f'/home/adrian/Pulpit/selenium_olx/Start_Porsche.png')
+        link = f'/home/adrian/Pulpit/selenium_olx/Start_Porsche.png'
+        load = Image.open(link)
+        render = ImageTk.PhotoImage(load)
+        img = tk.Label(self.root, image=render)
+        img.image = render
+        img.place(x=300, y=80)
 
 class Gallery(OlxPage):
     '''Gallery window'''
