@@ -9,6 +9,7 @@ from PIL import Image, ImageTk
 
 from module.clearDir import get_clear_dir
 from module.myGallery import MyGalleryOfCars
+from module.small_icons import Icons
 
 
 class OlxPage:
@@ -25,6 +26,7 @@ class OlxPage:
         self.get_set_window()
         self.get_selection_model()
         self.get_start_photo()
+        self.get_small_icons()
 
         #Iimport of external files
         get_clear_dir()
@@ -143,7 +145,14 @@ class OlxPage:
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self.root, image=render)
         img.image = render
-        img.place(x=300, y=80)
+        img.place(x=300, y=60)
+
+    def get_small_icons(self):
+        self.new_icons = tk.Toplevel(self.root)
+        Icons(self.new_icons)
+        self.new_icons.geometry("+%d+%d" % (1000, 156))
+
+        self.new_icons.overrideredirect(True)
 
 class Gallery(OlxPage):
     '''Gallery window'''
@@ -193,7 +202,7 @@ class Gallery(OlxPage):
             render = ImageTk.PhotoImage(load)
             img = tk.Label(self.root, image=render)
             img.image = render
-            img.place(x=300, y=80)
+            img.place(x=300, y=60)
         elif self.get_prev_photo():
             self.counterDown = self.counterUp
         else:
@@ -209,7 +218,7 @@ class Gallery(OlxPage):
             render = ImageTk.PhotoImage(load)
             img = tk.Label(self.root, image=render)
             img.image = render
-            img.place(x=300, y=80)
+            img.place(x=300, y=60)
         elif self.get_next_photo():
             self.counterUp = self.counterDown
         else:
@@ -219,4 +228,3 @@ if __name__ == '__main__':
     root = tk.Tk()
     app = Gallery()
     root.mainloop()
-
