@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from module.myGallery import MyGalleryOfCars
 
+
 class Icons:
     def __init__(self, root):
         self.root = root
@@ -15,11 +16,12 @@ class Icons:
         self.get_icons()
 
     def get_icons(self):
+        '''Method to add a mini gallery'''
 
-        if MyGalleryOfCars(self.root).get_read_photo() == 0:
+        if MyGalleryOfCars(self.root).get_read_photo() == 0:  # Displaying a photo before launching the application
             numberIcons = 1
         else:
-            numberIcons = MyGalleryOfCars(self.root).get_read_photo()
+            numberIcons = MyGalleryOfCars(self.root).get_read_photo()  # Photos after launching the application
 
         for i in range(1, numberIcons + 1):
             link = f'/home/adrian/Pulpit/selenium_olx/Start_Page.png'

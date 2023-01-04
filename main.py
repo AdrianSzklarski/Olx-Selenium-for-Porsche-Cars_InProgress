@@ -18,18 +18,16 @@ class OlxPage:
         self.option = Options()
         self.total = None
 
-
         # controll of interface of user
         self.option.headless = False
+        self.get_selection_model()
+        self.get_start_photo()
+
+        # Iimport of external files
+        get_clear_dir()
 
         # Calling up methods
         self.get_set_window()
-        self.get_selection_model()
-        self.get_start_photo()
-        self.get_small_icons()
-
-        #Iimport of external files
-        get_clear_dir()
 
     def get_set_window(self):
         ''' Main window settings '''
@@ -41,15 +39,24 @@ class OlxPage:
         tk.Label(self.root, text="Select of model's Porsche: ").place(x=60, y=60)
 
         self.radioValue = tk.IntVar(self.root, 0)
-        tk.Radiobutton(self.root, text="All", variable=self.radioValue, value=1, command=self.get_driver).place(x=50, y=100)
-        tk.Radiobutton(self.root, text="Cayenne", variable=self.radioValue, value=2, command=self.get_driver).place(x=50, y=140)
-        tk.Radiobutton(self.root, text="911", variable=self.radioValue, value=3, command=self.get_driver).place(x=50, y=180)
-        tk.Radiobutton(self.root, text="Cayenne S", variable=self.radioValue, value=4, command=self.get_driver).place(x=50, y=220)
-        tk.Radiobutton(self.root, text="Panamera", variable=self.radioValue, value=5, command=self.get_driver).place(x=50, y=260)
-        tk.Radiobutton(self.root, text="Boxter", variable=self.radioValue, value=6, command=self.get_driver).place(x=50, y=300)
-        tk.Radiobutton(self.root, text="944", variable=self.radioValue, value=7, command=self.get_driver).place(x=50, y=340)
-        tk.Radiobutton(self.root, text="Cayenne Turbo", variable=self.radioValue, value=8, command=self.get_driver).place(x=50, y=380)
-        tk.Radiobutton(self.root, text="More", variable=self.radioValue, value=9, command=self.get_driver).place(x=50, y=420)
+        tk.Radiobutton(self.root, text="All", variable=self.radioValue, value=1, command=self.get_driver).place(x=50,
+                                                                                                                y=100)
+        tk.Radiobutton(self.root, text="Cayenne", variable=self.radioValue, value=2, command=self.get_driver).place(
+            x=50, y=140)
+        tk.Radiobutton(self.root, text="911", variable=self.radioValue, value=3, command=self.get_driver).place(x=50,
+                                                                                                                y=180)
+        tk.Radiobutton(self.root, text="Cayenne S", variable=self.radioValue, value=4, command=self.get_driver).place(
+            x=50, y=220)
+        tk.Radiobutton(self.root, text="Panamera", variable=self.radioValue, value=5, command=self.get_driver).place(
+            x=50, y=260)
+        tk.Radiobutton(self.root, text="Boxter", variable=self.radioValue, value=6, command=self.get_driver).place(x=50,
+                                                                                                                   y=300)
+        tk.Radiobutton(self.root, text="944", variable=self.radioValue, value=7, command=self.get_driver).place(x=50,
+                                                                                                                y=340)
+        tk.Radiobutton(self.root, text="Cayenne Turbo", variable=self.radioValue, value=8,
+                       command=self.get_driver).place(x=50, y=380)
+        tk.Radiobutton(self.root, text="More", variable=self.radioValue, value=9, command=self.get_driver).place(x=50,
+                                                                                                                 y=420)
 
     def get_driver(self):
         ''' Scrapping the olx page for Porsche '''
@@ -60,7 +67,8 @@ class OlxPage:
         driver.find_element(By.CLASS_NAME, 'css-mf5jvh').click()
 
         driver.find_element(By.XPATH,
-                            '//*[@id="root"]/div[1]/div[2]/form/div[3]/div[1]/div/div[3]/div/div/div[2]/div/div[' + str(self.radioValue.get()) + ']/label/input').click()
+                            '//*[@id="root"]/div[1]/div[2]/form/div[3]/div[1]/div/div[3]/div/div/div[2]/div/div[' + str(
+                                self.radioValue.get()) + ']/label/input').click()
 
         # print(driver.page_source)
         link = r'?search%5Bfilter_enum_model%5D%5B0%5D'
@@ -122,8 +130,9 @@ class OlxPage:
         counter = 1
         while True:
             try:
-                div = driver.find_element(By.XPATH, f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]').text
-                resultPath = join(r'/home/adrian/Pulpit/selenium_olx/work_dir', f'Porsche{counter}.png')
+                div = driver.find_element(By.XPATH,
+                                          f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]').text
+                resultPath = join(r'/work_dir', f'Porsche{counter}.png')
 
                 if div and counter != 9:
                     link = f'//*[@id="root"]/div[1]/div[2]/form/div[5]/div/div[2]/div[{counter}]/a/div/div/div[1]/div[1]/div'
@@ -135,6 +144,8 @@ class OlxPage:
             except:
                 break
             counter += 1
+
+        self.get_small_icons()
 
     def get_start_photo(self):
         link = f'/home/adrian/Pulpit/selenium_olx/Start_Page.png'
@@ -148,6 +159,22 @@ class OlxPage:
         img.place(x=300, y=60)
 
     def get_small_icons(self):
+        '''Icon positioning'''
+
+        # Switch to a new line
+        number_of_elements = int(self.total)  # total number of images in the directory
+        list5 = []  # after five images, move to a new line
+        if number_of_elements < 5:
+            for i in range(1, int(self.total) + 1):
+                list5.append(i)
+        else:
+            for i in range(1, int(self.total) + 1):
+                if i % 5 == 0:
+                    list5.append(i)
+
+        print('number_of_elements: ', number_of_elements)
+        print('list5: ', list5)
+
         self.new_icons = tk.Toplevel(self.root)
         Icons(self.new_icons)
         self.new_icons.geometry("+%d+%d" % (1000, 156))
@@ -223,6 +250,7 @@ class Gallery(OlxPage):
             self.counterUp = self.counterDown
         else:
             self.counter = 0
+
 
 if __name__ == '__main__':
     root = tk.Tk()
