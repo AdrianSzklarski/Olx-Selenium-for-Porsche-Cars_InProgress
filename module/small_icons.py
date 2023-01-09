@@ -61,9 +61,3 @@ class Icons:
         else:
             tk.Label(self.root, text='Wrong Value').place(x=1000, y=156)
 
-        print(SIZE_Y * round(self.number / 5))
-
-if __name__ == '__main__':
-    root = tk.Tk()
-    app = Icons(root)
-    root.mainloop()
