@@ -134,9 +134,8 @@ class OlxPage:
                 break
             counter += 1
 
-        self.get_small_icons()
-
     def get_start_photo(self):
+        '''Main photo on page'''
         link = f'/home/adrian/Pulpit/selenium_olx/Start_Page.png'
         image = Image.open(link).resize((600, 400), Image.ANTIALIAS)
         image.save(fp=f'/home/adrian/Pulpit/selenium_olx/Start_Porsche.png')
@@ -146,34 +145,6 @@ class OlxPage:
         img = tk.Label(self.root, image=render)
         img.image = render
         img.place(x=300, y=60)
-
-    def get_small_icons(self):
-        '''Icon positioning'''
-
-        number_of_elements = int(self.total)  # total number of images in the directory
-        if number_of_elements < 5:
-            for i in range(1, int(self.total) + 1):
-                self.new_icons = tk.Toplevel(self.root)
-                Icons(self.new_icons)
-                self.new_icons.geometry("+%d+%d" % (850+i*170, 156))
-                self.new_icons.overrideredirect(True)
-
-        elif number_of_elements >= 5:
-        # elif 5 <= number_of_elements <= int(self.total) + 1:
-
-            y = int()
-            for j in range(1, 6):
-                x = 850 + j * 170
-                for i in range(1, int(self.total)+1):
-                    if i % 5 == 0:  # switch to a new line
-                        y = i
-                    self.new_icons = tk.Toplevel(self.root)
-                    Icons(self.new_icons)
-                    self.new_icons.geometry("+%d+%d" % (x, 156 + y*25))
-                    self.new_icons.overrideredirect(True)
-        else:
-            tk.Label(self.root, text='Wrong Value').place(x=1000, y=156)
-
 
 class Gallery(OlxPage):
     '''Gallery window'''
@@ -206,6 +177,7 @@ class Gallery(OlxPage):
         filemenu.add_command(label="Exit", command=quit)
 
         # Next & prev
+        file_menu.add_command(label="Start >", command=self.get_start_icons)
         file_menu.add_command(label="Next >>", command=self.get_next_photo)
         file_menu.add_command(label="Prev <<", command=self.get_prev_photo)
 
@@ -213,6 +185,13 @@ class Gallery(OlxPage):
         file_menu.add_cascade(label="Help", menu=helpmenu)
         helpmenu.add_command(label="About program")
         helpmenu.add_command(label="About...")
+
+    def get_start_icons(self):
+        '''Arranging backgrounds for multi gallery'''
+        self.new_icons = tk.Toplevel(self.root)
+        Icons(self.new_icons)
+        self.new_icons.geometry("+%d+%d" % (1000, 156))
+        self.new_icons.overrideredirect(True)
 
     def get_next_photo(self):
         self.lenght = MyGalleryOfCars(self.root).get_read_photo()
@@ -228,8 +207,6 @@ class Gallery(OlxPage):
             self.counterDown = self.counterUp
         else:
             self.counter = 0
-
-
 
     def get_prev_photo(self):
         self.lenght = MyGalleryOfCars(self.root).get_read_photo()
