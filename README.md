@@ -8,7 +8,7 @@
 <img src="images/app.png" alt="OlxPage">
 <br>
 
-<p style="text-align: center">First preview version of the application (in progress) </p>
+<p style="text-align: center">Second preview version of the application (in progress) </p>
 
 
 <br>
